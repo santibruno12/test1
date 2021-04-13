@@ -1,0 +1,5976 @@
+swagger: '2.0'
+info:
+  description: GvpAPI
+  version: 1.0.4
+  title: GvpFintech API
+  contact:
+    email: fvarela@systemweb.com.ar
+  license:
+    name: SystemWEB©
+    url: 'http://www.systemweb.com.ar'
+host: virtserver.swaggerhub.com
+basePath: /Systemweb/GvpApi2/1.0.1
+securityDefinitions:
+  ApiKeyAuth:
+    type: apiKey
+    in: header
+    name: accessToken
+security:
+  - ApiKeyAuth: []
+tags:
+  - name: Users & Applications
+  - name: Financial Account
+  - name: Products
+  - name: Payments
+  - name: Sales
+  - name: Bill Payments Payer Services
+    description: Bill payment payer api services
+  - name: Payments Intents
+    description: A PaymentIntent guides you through the process of collecting a payment from your customer
+  - name: Payouts
+    description: Send money to differents Payouts destinations types
+  - name: Inventory
+  - name: Notifications
+  - name: Stats
+  - name: Resources
+    description: Objetos auxiliares
+schemes:
+  - https
+consumes:
+  - application/json
+produces:
+  - application/json
+paths:
+  /login:
+    post:
+      tags:
+        - Authentification
+      summary: Get Login Token
+      parameters:
+        - in: body
+          name: login
+          required: true
+          schema:
+            $ref: '#/definitions/LoginAuth'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthToken'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /loginTerminal:
+    post:
+      tags:
+        - Authentification
+      summary: Get Login Token
+      parameters:
+        - in: body
+          name: login
+          required: true
+          schema:
+            $ref: '#/definitions/LoginTerminalAuth'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthToken'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /loginSso:
+    post:
+      tags:
+        - Authentification
+      summary: Get Sso Login Token
+      parameters:
+        - in: body
+          name: loginSso
+          required: true
+          schema:
+            $ref: '#/definitions/LoginSso'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthToken'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /forgot-password:
+    post:
+      tags:
+        - Authentification
+      summary: Send a password recovery link
+      parameters:
+        - in: body
+          name: forgot
+          required: true
+          schema:
+            $ref: '#/definitions/ForgotPassword'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ForgotPassword'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me:
+    get:
+      tags:
+        - Users & Applications
+      summary: Logged user info detail
+      parameters: []
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    put:
+      tags:
+        - Users & Applications
+      summary: Modify user info
+      description: Modify user info
+      parameters:
+        - in: body
+          name: applicationUser
+          required: true
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/change-password:
+    post:
+      tags:
+        - Users & Applications
+      summary: Change password login
+      parameters:
+        - in: body
+          name: changePassword
+          required: true
+          schema:
+            $ref: '#/definitions/ChangePassword'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/AuthToken'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/upload-avatar:
+    put:
+      tags:
+        - Users & Applications
+      summary: Upload avatar of application user
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: avatarImageBytes
+          in: formData
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /my-account:
+    get:
+      tags:
+        - Users & Applications
+      summary: Get details of My Account Holder
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Account'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    put:
+      tags:
+        - Users & Applications
+      summary: Modify My Account Holder
+      description: Modify Account Holder
+      parameters:
+        - in: body
+          name: account
+          required: true
+          schema:
+            $ref: '#/definitions/Account'
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/Account'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /my-account/upload-avatar:
+    put:
+      tags:
+        - Users & Applications
+      summary: Upload avatar of account
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - name: avatarImageBytes
+          in: formData
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Account'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /my-account/users:
+    get:
+      tags:
+        - Users & Applications
+      summary: Get all users for logged account
+      parameters: []
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ApplicationUser'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    post:
+      tags:
+        - Users & Applications
+      summary: Add user to account
+      parameters:
+        - in: body
+          name: applicationUser
+          required: true
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/my-account/users/{id}':
+    put:
+      tags:
+        - Users & Applications
+      summary: Modify application user
+      description: Modify a application user of account
+      parameters:
+        - name: id
+          in: path
+          description: Id of ApplicationUser
+          required: true
+          type: string
+        - in: body
+          name: applicationUser
+          required: true
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/my-account/users/{id}/reset-password':
+    post:
+      tags:
+        - Users & Applications
+      summary: Reset password of ApplicationUser
+      description: This method process a reset password for application user. This process send email with the steps to assign a new login password.
+      parameters:
+        - name: id
+          in: path
+          description: Id of ApplicationUser
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /my-account/user-groups:
+    get:
+      tags:
+        - Users & Applications
+      summary: Get available user groups for account
+      description: 'User groups, are permission roles for each users. Each account, has a users groups avaiable, to assign to each users for account. This grups, has differents permissions.'
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/UserGroup'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /my-account/business-resources/atm-cards:
+    get:
+      tags:
+        - Business Resources
+      summary: Get all available atm cards
+      parameters: []
+      responses:
+        '200':
+          description: Ok
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AtmCard'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /account/comercialAccount/register:
+    post:
+      tags:
+        - Register
+      summary: Register new comecial account
+      parameters:
+        - in: body
+          name: login
+          required: true
+          schema:
+            $ref: '#/definitions/ComercialAccountRegister'
+          description: ''
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Register'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+      description: ''
+  '/account/comercialAccount/{AccountId}/register':
+    post:
+      tags:
+        - Register
+      summary: Register new comecial account
+      parameters:
+        - name: AccountId
+          in: path
+          description: Id of Account
+          required: true
+          type: string
+        - in: body
+          name: login
+          required: true
+          schema:
+            $ref: '#/definitions/ComercialAccountRegister'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Register'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /account/finalConsumerAccount/register:
+    post:
+      tags:
+        - Register
+      summary: Register new final consumer account
+      parameters:
+        - in: body
+          name: login
+          required: true
+          schema:
+            $ref: '#/definitions/Register'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Register'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/account/finalConsumerAccount/{AccountId}/register':
+    post:
+      tags:
+        - Register
+      summary: Register new final consumer account
+      parameters:
+        - name: AccountId
+          in: path
+          description: Id of Account
+          required: true
+          type: string
+        - in: body
+          name: login
+          required: true
+          schema:
+            $ref: '#/definitions/Register'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Register'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '403':
+          description: Forbidden
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /financial-accounts:
+    get:
+      tags:
+        - Financial Account
+      summary: Get all Financial account
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FinancialAccount'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/financial-account/{id}':
+    get:
+      tags:
+        - Financial Account
+      summary: Get FinancialAccount details
+      parameters:
+        - name: id
+          in: path
+          description: Id of Financial Account
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/FinancialAccount'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/financial-account/{financial-accountId}/add-funds':
+    post:
+      tags:
+        - Financial Account
+      summary: Add funds to a prepaid financial account
+      parameters:
+        - name: financial-accountId
+          in: path
+          description: Id of financial account
+          required: true
+          type: string
+        - name: payment
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Payment'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Purchase'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /financial-accounts/prepaid-accounts:
+    get:
+      tags:
+        - Financial Account
+      summary: Get all PrePaid Financial account
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FinancialAccount'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/financial-account/prepaid-account/{prepaidAccountId}/add-funds':
+    post:
+      tags:
+        - Financial Account
+      summary: Add funds to a prepaid financial account
+      parameters:
+        - name: prepaidAccountId
+          in: path
+          description: Id of financial prepaid account
+          required: true
+          type: string
+        - name: purchase
+          in: body
+          required: true
+          schema:
+            $ref: '#/definitions/Purchase'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Purchase'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/financial-account/{id}/balance-detail':
+    get:
+      tags:
+        - Financial Account
+      summary: Get FinancialAccount balance summary for differents filters
+      parameters:
+        - name: id
+          in: path
+          description: Id of Financial Account
+          required: true
+          type: string
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BalanceSummary'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/financial-account/{id}/movements':
+    get:
+      tags:
+        - Financial Account
+      summary: Get FinancialAccount balance summary for differents filters
+      parameters:
+        - name: id
+          in: path
+          description: Id of Financial Account
+          required: true
+          type: string
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+        - name: movementSubType
+          in: query
+          description: Type of movement
+          required: false
+          type: string
+        - name: direction
+          in: query
+          description: Monetary direction
+          required: false
+          type: string
+          enum:
+            - debit
+            - credit
+        - name: transactionType
+          in: query
+          type: string
+        - name: startIndex
+          in: query
+          description: Integer from start result
+          required: false
+          type: integer
+          default: 0
+        - name: limitIndex
+          in: query
+          description: Limit count of result
+          required: false
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FinancialMovement'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/financial-account/{id}/movements/{movementId}':
+    get:
+      tags:
+        - Financial Account
+      summary: Get Movement detail for MovementId
+      parameters:
+        - name: id
+          in: path
+          description: Id of Financial Account
+          required: true
+          type: string
+        - name: movementId
+          in: path
+          description: Movement Id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/FinancialMovement'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /products:
+    get:
+      tags:
+        - Products
+      summary: All Products available
+      description: Return the products available
+      parameters:
+        - name: code
+          in: query
+          required: false
+          type: string
+        - name: name
+          in: query
+          required: false
+          type: string
+        - name: productCategoryId
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    post:
+      tags:
+        - Products
+      summary: Add a product
+      parameters:
+        - in: body
+          name: product
+          required: false
+          schema:
+            $ref: '#/definitions/Product'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/product/{id}':
+    get:
+      tags:
+        - Products
+      summary: Product by Id
+      parameters:
+        - name: id
+          in: path
+          description: Id of product
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Product'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    put:
+      tags:
+        - Products
+      summary: Modify a product
+      parameters:
+        - name: id
+          in: path
+          description: Id of product
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payment-methods:
+    get:
+      tags:
+        - Payments
+      summary: Get all available payment methods
+      description: Return all available payment methods
+      parameters:
+        - name: type
+          in: query
+          description: Payment method Type
+          required: false
+          type: string
+          enum:
+            - credit_card
+            - debit_card
+            - qr_code
+            - virtual_wallet
+            - link_button
+            - bank_transfer
+            - bank_check
+            - bank_deposit
+            - collector_network
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PaymentMethodDefinition'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payment-methods-transaction:
+    post:
+      tags:
+        - Payments
+      summary: Get available payment methods for a transaction
+      description: Return all available payment methods for a transaction
+      parameters:
+        - in: body
+          name: transaction
+          required: true
+          schema:
+            $ref: '#/definitions/Transaction'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/PaymentMethodDefinition'
+            example:
+              - id: cash
+                name: Efectivo
+                enable: true
+                minimiumAmount: 1
+                maximiumAmount: 10000
+                paymentMethodType: cash
+              - id: credit_card
+                name: T. Credito
+                enable: true
+                minimiumAmount: 1
+                maximiumAmount: 10000
+                paymentMethodType: credit_card
+                paymentDataClassName: card_data
+              - id: debit_card
+                name: T. Debito
+                enable: true
+                minimiumAmount: 1
+                maximiumAmount: 10000
+                paymentMethodType: debit_card
+                paymentDataClassName: card_data
+              - id: mercadopago_qr
+                name: Mercado Pago
+                enable: true
+                minimiumAmount: 1
+                maximiumAmount: 10000
+                paymentMethodType: qr_code
+              - id: cuentadni_wallet
+                name: Bapro CuentaDNI
+                enable: true
+                minimiumAmount: 1
+                maximiumAmount: 10000
+                paymentMethodType: virtual_wallet
+                paymentDataClassName: virtual_wallet_data
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payment-methods/cardToken:
+    post:
+      tags:
+        - Payments
+      summary: Add and tokenize a card
+      description: 'You can create a tokenized card, which will be available as a means of payment for your account'
+      parameters:
+        - in: body
+          name: cardToken
+          required: true
+          schema:
+            $ref: '#/definitions/CardTokenRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CardDefinition'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/payment-methods/cardToken/{paymentMethodDefinitionId}':
+    delete:
+      tags:
+        - Payments
+      summary: Delete a card token payment method definition
+      description: Delete a card token payment method definition.
+      parameters:
+        - name: paymentMethodDefinitionId
+          in: path
+          description: Id of card token payment method definition
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payment-methods/bank-accounts:
+    get:
+      tags:
+        - Payments
+      summary: Get available bank-accounts
+      description: Return all available bank accounts
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BankAccount'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /banks:
+    get:
+      tags:
+        - Payments
+      summary: Get available Banks
+      description: Get available Banks
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Bank'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/bank/{id}':
+    get:
+      tags:
+        - Payments
+      summary: Get Bank object
+      description: Get bank object
+      parameters:
+        - name: id
+          in: path
+          description: Id of bank
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Bank'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/bank/{id}/branches':
+    get:
+      tags:
+        - Payments
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: code
+          in: query
+          required: false
+          type: string
+        - name: startIndex
+          in: query
+          description: Integer from start result
+          required: false
+          type: integer
+          default: 0
+        - name: limitIndex
+          in: query
+          description: Limit count of result
+          required: false
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Branch'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payments:
+    get:
+      tags:
+        - Payments
+      summary: Get payments
+      description: Get a list of payments
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+        - name: paymentMethodId
+          in: query
+          description: A payment method id
+          required: false
+          type: string
+        - name: state
+          in: query
+          required: false
+          type: string
+          enum:
+            - approved
+            - pending
+            - rejected
+        - name: transactionNumber
+          in: query
+          description: Transaction number
+          required: false
+          type: integer
+        - name: paymentMethodType
+          in: query
+          required: false
+          type: string
+        - name: clientTransactionId
+          in: query
+          required: false
+          type: string
+        - name: startIndex
+          in: query
+          description: Integer from start result
+          required: false
+          type: integer
+          default: 0
+        - name: limitIndex
+          in: query
+          description: Limit count of result
+          required: false
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Payment'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    post:
+      tags:
+        - Payments
+      summary: Add payment
+      parameters:
+        - in: body
+          name: payment
+          required: false
+          schema:
+            $ref: '#/definitions/Payment'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Payment'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payments/balance-summary:
+    get:
+      tags:
+        - Payments
+      summary: Balance summary report
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BalanceSummary'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payments/balance-detail:
+    get:
+      tags:
+        - Payments
+      summary: Balance detail report
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BalanceDetail'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/payment/{id}':
+    get:
+      tags:
+        - Payments
+      summary: Get a payment transaction
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Payment'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    put:
+      tags:
+        - Payments
+      summary: Modify a Payment
+      description: You only can modify a transaction payment that is in pending state.
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+        - in: body
+          name: payment
+          required: false
+          schema:
+            $ref: '#/definitions/Payment'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Payment'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    delete:
+      tags:
+        - Payments
+      summary: Canel a Payment
+      description: You only can cancel a transaction payment that is in pending state.
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Payment'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/payment/{id}/receipt':
+    get:
+      tags:
+        - Payments
+      summary: Get the receipt for this transaction
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TransactionReceipt'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payment/intents:
+    post:
+      tags:
+        - Payments Intents
+      summary: Generate Payment Intention
+      parameters:
+        - in: body
+          name: payment
+          required: false
+          schema:
+            $ref: '#/definitions/PaymentIntent'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PaymentIntent'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/payment/intents/{id}':
+    get:
+      tags:
+        - Payments Intents
+      summary: Get payment intetion
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PaymentIntent'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    delete:
+      tags:
+        - Payments Intents
+      summary: Cancel payment intetion
+      description: You only can cancel a transaction payment that is in pending state.
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PaymentIntent'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /payment/intents/getByClientTransactionId:
+    get:
+      tags:
+        - Payments Intents
+      summary: Get a payement intent by a client transaction id
+      description: Get payment by client tranasction id
+      parameters:
+        - name: clientTransactionId
+          in: query
+          description: Client transaction id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/PaymentIntent'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/transaction/{id}':
+    get:
+      tags:
+        - Transactions
+      summary: Get a transaction from Id
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Transaction'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /transfer/inner:
+    post:
+      tags:
+        - Transfers
+      summary: Add an inner transfer (between financialAccounts)
+      parameters:
+        - in: body
+          name: transfer
+          required: true
+          schema:
+            $ref: '#/definitions/Transfer'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Transfer'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /transfer/inner/p2p-transfer:
+    post:
+      tags:
+        - Transfers
+      summary: Add an internal peer to peer transfer
+      parameters:
+        - in: body
+          name: transfer
+          required: true
+          schema:
+            $ref: '#/definitions/Transfer'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Transfer'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /transfer/inner/beneficiary-discovery:
+    post:
+      tags:
+        - Transfers
+      summary: Discovery destination transfer beneficiary
+      parameters:
+        - in: body
+          name: transfer
+          required: true
+          schema:
+            $ref: '#/definitions/P2pBeneficiaryDiscoveryRequest'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/P2pBeneficiaryDiscoveryResponse'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /bank-services/cvu:
+    get:
+      tags:
+        - Bank Services
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BankRouting'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    post:
+      tags:
+        - Bank Services
+      parameters:
+        - in: body
+          name: bankrouting
+          required: true
+          schema:
+            $ref: '#/definitions/BankRouting'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BankRouting'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /bank-services/cvu/alias:
+    put:
+      tags:
+        - Bank Services
+      parameters:
+        - in: body
+          name: bankrouting
+          required: true
+          schema:
+            $ref: '#/definitions/BankRouting'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BankRouting'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /transfer/outer/bank-transfer/beneficiary-discovery:
+    post:
+      tags:
+        - Bank Services
+      parameters:
+        - in: body
+          name: bankrouting
+          required: true
+          schema:
+            $ref: '#/definitions/BankRouting'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BankRouting'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /transfer/outer/bank-transfer/cvu-transfers:
+    get:
+      tags:
+        - Bank Services
+      summary: Get sales
+      description: Get a list of sales
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+        - name: paymentMethodId
+          in: query
+          description: A payment method id
+          required: false
+          type: string
+        - name: state
+          in: query
+          required: false
+          type: string
+          enum:
+            - approved
+            - pending
+            - rejected
+        - name: transactionNumber
+          in: query
+          description: Transaction number
+          required: false
+          type: integer
+        - name: clientTransactionId
+          in: query
+          required: false
+          type: string
+        - name: startIndex
+          in: query
+          description: Integer from start result
+          required: false
+          type: integer
+          default: 0
+        - name: limitIndex
+          in: query
+          description: Limit count of result
+          required: false
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transfer'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/transfer/outer/bank-transfer/cvu-transfer/{id}':
+    get:
+      tags:
+        - Bank Services
+      summary: Get a sale transaction
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Transfer'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    put:
+      tags:
+        - Bank Services
+      summary: Modify a Bank Transfer Cvu
+      description: You only can modify a transaction sale that is in pending state.
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+        - in: body
+          name: transfer
+          required: true
+          schema:
+            $ref: '#/definitions/Transfer'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Transfer'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /transfer/outer/bank-transfer/cvu-transfer:
+    post:
+      tags:
+        - Bank Services
+      summary: Do a Bank Transfer Cvu
+      parameters:
+        - in: body
+          name: transfer
+          required: true
+          schema:
+            $ref: '#/definitions/Transfer'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Transfer'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /transfers:
+    get:
+      tags:
+        - Bank Services
+      summary: Get sales
+      description: Get a list of sales
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+        - name: paymentMethodId
+          in: query
+          description: A payment method id
+          required: false
+          type: string
+        - name: state
+          in: query
+          required: false
+          type: string
+          enum:
+            - approved
+            - pending
+            - rejected
+        - name: transactionNumber
+          in: query
+          description: Transaction number
+          required: false
+          type: integer
+        - name: clientTransactionId
+          in: query
+          required: false
+          type: string
+        - name: startIndex
+          in: query
+          description: Integer from start result
+          required: false
+          type: integer
+          default: 0
+        - name: limitIndex
+          in: query
+          description: Limit count of result
+          required: false
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transfer'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales:
+    get:
+      tags:
+        - Sales
+        - Bill Payments Payer Services
+      summary: Get sales
+      description: Get a list of sales
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+        - name: paymentMethodId
+          in: query
+          description: A payment method id
+          required: false
+          type: string
+        - name: state
+          in: query
+          required: false
+          type: string
+          enum:
+            - approved
+            - pending
+            - rejected
+        - name: productId
+          in: query
+          required: false
+          type: string
+        - name: productTypeId
+          in: query
+          required: false
+          type: string
+        - name: vendorId
+          in: query
+          required: false
+          type: string
+        - name: transactionNumber
+          in: query
+          description: Transaction number
+          required: false
+          type: integer
+        - name: paymentMethodType
+          in: query
+          required: false
+          type: string
+        - name: clientTransactionId
+          in: query
+          required: false
+          type: string
+        - name: startIndex
+          in: query
+          description: Integer from start result
+          required: false
+          type: integer
+          default: 0
+        - name: limitIndex
+          in: query
+          description: Limit count of result
+          required: false
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    post:
+      tags:
+        - Sales
+      summary: Add sale
+      parameters:
+        - in: body
+          name: sale
+          required: false
+          schema:
+            $ref: '#/definitions/Sale'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/sale/{id}':
+    get:
+      tags:
+        - Sales
+        - Bill Payments Payer Services
+      summary: Get a sale transaction
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    put:
+      tags:
+        - Sales
+        - Bill Payments Payer Services
+      summary: Modify a Sale
+      description: You only can modify a transaction sale that is in pending state.
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+        - in: body
+          name: payment
+          required: false
+          schema:
+            $ref: '#/definitions/Sale'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    delete:
+      tags:
+        - Sales
+        - Bill Payments Payer Services
+      summary: Cancel a Sale
+      description: You only can cancel a transaction that is in pending state.
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/sale/{id}/receipt':
+    get:
+      tags:
+        - Sales
+        - Bill Payments Payer Services
+      summary: Get the receipt for this transaction
+      parameters:
+        - name: id
+          in: path
+          description: Id of transaction
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/TransactionReceipt'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/billPayment:
+    post:
+      tags:
+        - Bill Payments Payer Services
+      summary: Make a new Bill Payment
+      description: Method for make a new BillPayment
+      parameters:
+        - in: body
+          name: sale
+          required: false
+          schema:
+            $ref: '#/definitions/Sale'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/pinCode:
+    post:
+      tags:
+        - Sales
+      summary: Make a new sale with pincode product
+      description: Method for make a new sale with pincode product
+      parameters:
+        - in: body
+          name: sale
+          required: false
+          schema:
+            $ref: '#/definitions/Sale'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/cashOut:
+    post:
+      tags:
+        - Sales
+      summary: Make a new cashOut sale
+      description: Method for make a cash money out sale
+      parameters:
+        - in: body
+          name: sale
+          required: false
+          schema:
+            $ref: '#/definitions/Sale'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/saleProducts:
+    post:
+      tags:
+        - Sales
+      summary: Make a new cashOut sale
+      description: Method for make a cash money out sale
+      parameters:
+        - in: body
+          name: sale
+          required: false
+          schema:
+            $ref: '#/definitions/Sale'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/billPayment/availablesBill/findByBarCode:
+    get:
+      tags:
+        - Bill Payments Payer Services
+      summary: Get a bill available for a bar code
+      description: Get a bill available for a bar code
+      parameters:
+        - name: billBarCode
+          in: query
+          required: true
+          type: string
+        - name: companyCode
+          in: query
+          required: false
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BillPaymentData'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    post:
+      tags:
+        - Bill Payments Payer Services
+      summary: Get a bill available for a bar code
+      description: Get a bill available for a bar code
+      parameters:
+        - in: body
+          name: sale
+          required: false
+          schema:
+            $ref: '#/definitions/BillPaymentData'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BillPaymentData'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/billPayment/availablesBill/findByCustomerData:
+    get:
+      tags:
+        - Bill Payments Payer Services
+      summary: Get a bill available for specific customer data
+      description: Get a bill available for specific customer data
+      parameters:
+        - name: companyCode
+          in: query
+          required: false
+          type: string
+        - name: customerReference
+          in: query
+          description: Specifc customer Reference for company
+          required: false
+          type: string
+        - name: voluntaryAmount
+          in: query
+          description: Specifc customer voluntary payment amount
+          required: false
+          type: number
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BillPaymentData'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+    post:
+      tags:
+        - Bill Payments Payer Services
+      summary: Get a bill available for a bar code
+      description: Get a bill available for a bar code
+      parameters:
+        - in: body
+          name: sale
+          required: false
+          schema:
+            $ref: '#/definitions/BillPaymentData'
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BillPaymentData'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/billPayment/availablesCompanies:
+    get:
+      tags:
+        - Bill Payments Payer Services
+      summary: Get all bill payment available company
+      description: Get all bill payment available company
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/BillCompany'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/reports/summary:
+    get:
+      tags:
+        - Sales
+      summary: Get total sales report
+      description: Get total sales report
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+        - name: state
+          in: query
+          required: false
+          type: string
+          enum:
+            - approved
+            - pending
+            - rejected
+        - name: productId
+          in: query
+          required: false
+          type: string
+        - name: productTypeId
+          in: query
+          required: false
+          type: string
+        - name: productGroupId
+          in: query
+          required: false
+          type: string
+        - name: vendorId
+          in: query
+          required: false
+          type: string
+        - name: groupBy
+          description: 'Group by options: product, vendor, proudctType, date'
+          in: query
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TotalSale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/topup:
+    post:
+      tags:
+        - Sales
+      summary: Make a TopUp sale product
+      description: With this method you can carry out a sale transaction of the type Topup
+      parameters:
+        - in: body
+          name: sale
+          required: false
+          schema:
+            $ref: '#/definitions/Sale'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Sale'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /sales/topup/products:
+    get:
+      tags:
+        - Sales
+      summary: Get productos avaiable for topUp
+      description: Get productos avaiable for topUp
+      parameters: []
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Product'
+        '202':
+          description: Transaction Processing (Pending). You can query the result
+          schema:
+            $ref: '#/definitions/Sale'
+        '400':
+          description: Transaction Rejected
+          schema:
+            $ref: '#/definitions/GvpError'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '402':
+          description: Transaction Cancelled
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /billPaymentGateway/publish:
+    post:
+      tags:
+        - BillPaymentGateway
+      summary: Publish a new bill payment contract
+      description: Method for publish bill payments to be available for payment
+      parameters:
+        - in: body
+          name: billPaymentPublication
+          required: false
+          schema:
+            $ref: '#/definitions/BillPaymentPublication'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/BillPaymentPublication'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /cashInOutGateway/publish:
+    post:
+      tags:
+        - CashInOutGateway
+      summary: Publish a new cash in/out contract
+      description: Method for publish cash-in/out to be available for payment
+      parameters:
+        - in: body
+          name: cashInOutPublication
+          required: false
+          schema:
+            $ref: '#/definitions/CashInOutPublication'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/CashInOutPublication'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /activities/transactional:
+    get:
+      tags:
+        - Stats
+      summary: Get transactional activities
+      description: Get a list of transactional activities
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+        - name: state
+          in: query
+          required: false
+          type: string
+          enum:
+            - approved
+            - pending
+            - rejected
+        - name: productId
+          in: query
+          required: false
+          type: string
+        - name: productTypeId
+          in: query
+          required: false
+          type: string
+        - name: vendorId
+          in: query
+          required: false
+          type: string
+        - name: paymentMethodType
+          in: query
+          required: false
+          type: string
+        - name: transactionType
+          in: query
+          required: false
+          type: string
+        - name: startIndex
+          in: query
+          description: Integer from start result
+          required: false
+          type: integer
+          default: 0
+        - name: limitIndex
+          in: query
+          description: Limit count of result
+          required: false
+          type: integer
+          default: 20
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TransactionalActivity'
+            example:
+              - className: TransactionalActivity
+                date: '2012-04-23T18:25:43.511Z'
+                title: Recarga Celular
+                imageUrl: gv/logoClaro.png
+                amount: 150
+                description: '+541125412541'
+                state: approved
+                productType: Recharge
+                transactionId: 2D06478D397F297806E6
+                transactionType: Sale
+              - className: TransactionalActivity
+                date: '2012-04-23T18:25:43.511Z'
+                title: Recarga Celular
+                imageUrl: gv/logoPersonal.png
+                amount: 200
+                description: '+541125412541'
+                state: pending
+                productType: Recharge
+                transactionId: 2D06478D397F297806E6
+                transactionType: Sale
+              - className: TransactionalActivity
+                date: '2012-04-23T18:25:43.511Z'
+                title: Recarga Celular
+                imageUrl: gv/logoMovistar.png
+                amount: 100
+                description: '+541125412541'
+                state: rejected
+                productType: Recharge
+                transactionId: 2D06478D397F297806E6
+                transactionType: Sale
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /promotions:
+    get:
+      tags:
+        - Notifications
+      summary: Get all available promotions
+      description: Get all available promotions
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Promotion'
+            example:
+              - id: 19A40F54F62925240D17
+                title: Promo Personal
+                description: Con Personal recarga mas credito con menos dinero
+                imageUrl: 'https://cdn.ynercia.com.ar/promos/PersonalWSP1.jpg'
+              - id: 19A40F54F62925240D17
+                title: Promo Claro
+                description: Con Claro recarga mas credito con menos dinero
+                imageUrl: 'https://cdn.ynercia.com.ar/promos/01_claro_triplica.jpg'
+                linkUrl: 'https://www.telerecargas.com.ar'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /notifications:
+    get:
+      tags:
+        - Notifications
+      summary: Get notifications
+      description: Get a list of notifications
+      parameters:
+        - name: beginDate
+          in: query
+          description: Begin date balance
+          required: false
+          type: string
+          format: date-time
+        - name: endDate
+          in: query
+          description: End date balance
+          required: false
+          type: string
+          format: date-time
+        - name: startIndex
+          in: query
+          description: Integer from start result
+          required: false
+          type: integer
+          default: 0
+        - name: limitIndex
+          in: query
+          description: Limit count of result
+          required: false
+          type: integer
+          default: 20
+        - name: onlyUnread
+          in: query
+          description: Include only unread notifications
+          required: false
+          type: boolean
+          default: false
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/GvpNotification'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+      operationId: ''
+  /notifications/unreadCount:
+    get:
+      tags:
+        - Notifications
+      summary: Get unread notifications count
+      description: Get unread notifications count
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: integer
+            example: 7
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/notification/{id}/read':
+    put:
+      tags:
+        - Notifications
+      summary: Read notification
+      parameters:
+        - name: id
+          in: path
+          description: Id of notification
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/GvpNotification'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/notification/{id}':
+    delete:
+      tags:
+        - Notifications
+      summary: Delete notification
+      parameters:
+        - name: id
+          in: path
+          description: Id of notification
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/check-email-availability:
+    get:
+      tags:
+        - Resources
+      summary: Check if email is available
+      description: Check if email is available
+      parameters:
+        - name: email
+          in: query
+          description: Email for check
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/check-phone-availability:
+    get:
+      tags:
+        - Resources
+      summary: Check if phone number is available
+      description: Check if phone number is available
+      parameters:
+        - name: phone
+          in: query
+          description: Phone E.164 format
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/check-identification-availability:
+    get:
+      tags:
+        - Resources
+      summary: Check if identification type and number is available
+      description: Check if identification number is available
+      parameters:
+        - name: identificationTypeCode
+          in: query
+          description: Code of identification Type
+          required: true
+          type: string
+        - name: identificationNumber
+          in: query
+          description: Identification number
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/phone:
+    put:
+      tags:
+        - Users & Applications
+      summary: Update my phone number
+      description: Update my phone number
+      parameters:
+        - in: body
+          name: phone
+          required: true
+          schema:
+            $ref: '#/definitions/Phone'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/email:
+    put:
+      tags:
+        - Users & Applications
+      summary: Update my email
+      description: Update my email
+      parameters:
+        - in: body
+          name: sale
+          required: true
+          schema:
+            type: string
+            description: Email
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/tributary-info:
+    put:
+      tags:
+        - Users & Applications
+      description: Update my tributary info
+      summary: Update my tributary info
+      parameters:
+        - in: body
+          name: tributaryInfo
+          required: true
+          schema:
+            $ref: '#/definitions/TributaryInfo'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ApplicationUser'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/phone/send-validation-request:
+    post:
+      tags:
+        - Users & Applications
+      summary: Send Phone validation Code
+      description: Send Phone validation Code
+      parameters:
+        - in: body
+          name: PhoneValidationRequest
+          required: true
+          schema:
+            $ref: '#/definitions/PhoneValidationRequest'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /me/phone/validate-code:
+    post:
+      tags:
+        - Users & Applications
+      summary: Validate received phone verification code
+      description: Validate received phone verification code
+      parameters:
+        - in: body
+          name: PhoneValidationRequest
+          required: true
+          schema:
+            $ref: '#/definitions/PhoneValidationRequest'
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /account/check-tributaryCode-availability:
+    get:
+      tags:
+        - Resources
+      summary: Check if tributary code is available
+      description: Check if tributary code is available
+      parameters:
+        - name: tributarycode
+          in: query
+          description: Tributary code for check
+          required: true
+          type: string
+        - name: tributaryidentificationtypeid
+          in: query
+          description: tributry identification type
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: string
+            example: OK
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /tributaryInfo/tributaryIdentificationTypes:
+    get:
+      tags:
+        - Resources
+      summary: Tributary identifitacion types
+      description: Return all availables tributary identification types
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TributaryIdentificationType'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /tributaryInfo/tributaryConditions:
+    get:
+      tags:
+        - Resources
+      summary: Tributary conditions
+      description: Return all availables tributary conditions
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/TributaryCondition'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /account/comercialTypes:
+    get:
+      tags:
+        - Resources
+      summary: Commerce types
+      description: Return all availables account commerce type
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ComercialType'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/account/comercialType/{comercialTypeId}':
+    get:
+      tags:
+        - Resources
+      summary: Commerce types
+      description: Return a commerce type by id
+      parameters:
+        - name: comercialTypeId
+          in: path
+          description: Id of Country
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/ComercialType'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /address/countries:
+    get:
+      tags:
+        - Address Resources
+      summary: Available countries
+      description: Return all availables country
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Country'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  /address/reverse-geolocation:
+    post:
+      tags:
+        - Address Resources
+      summary: Get Address location by geolocation object
+      description: Get Address location by geolocation object
+      parameters:
+        - in: body
+          name: GeoCoordinates
+          required: true
+          schema:
+            $ref: '#/definitions/GeoCoordinates'
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Address'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Address'
+  '/address/country/{countryId}':
+    get:
+      tags:
+        - Address Resources
+      description: Return available country
+      parameters:
+        - name: countryId
+          in: path
+          description: Id of Country
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Country'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/address/country/{countryId}/provinces':
+    get:
+      tags:
+        - Address Resources
+      summary: Available province for country
+      description: Return all availables provinces for a country
+      parameters:
+        - name: countryId
+          in: path
+          description: Id of Country
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Province'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/address/country/{countryId}/province/{provinceId}':
+    get:
+      tags:
+        - Address Resources
+      description: Return available province
+      parameters:
+        - name: countryId
+          in: path
+          description: Id of Country
+          required: true
+          type: string
+        - name: provinceId
+          in: path
+          description: Id of Province
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Province'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/address/country/{countryId}/province/{provinceId}/cities':
+    get:
+      tags:
+        - Address Resources
+      summary: Available citie for province
+      description: Return all availables cities for a province
+      parameters:
+        - name: countryId
+          in: path
+          description: Id of Country
+          required: true
+          type: string
+        - name: provinceId
+          in: path
+          description: Id of Province
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/City'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/address/country/{countryId}/province/{provinceId}/city/{cityId}':
+    get:
+      tags:
+        - Address Resources
+      description: Return available city
+      parameters:
+        - name: countryId
+          in: path
+          description: Id of Country
+          required: true
+          type: string
+        - name: provinceId
+          in: path
+          description: Id of District
+          required: true
+          type: string
+        - name: cityId
+          in: path
+          description: Id of City
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/City'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/address/country/{countryId}/province/{provinceId}/city/{cityId}/districts':
+    get:
+      tags:
+        - Address Resources
+      summary: Available districts for city
+      description: Return all availables cities for a province
+      parameters:
+        - name: countryId
+          in: path
+          description: Id of Country
+          required: true
+          type: string
+        - name: provinceId
+          in: path
+          description: Id of Province
+          required: true
+          type: string
+        - name: cityId
+          in: path
+          description: Id of City
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/District'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+  '/address/country/{countryId}/province/{provinceId}/city/{cityId}/district/{districtId}':
+    get:
+      tags:
+        - Address Resources
+      description: Return available district
+      parameters:
+        - name: countryId
+          in: path
+          description: Id of Country
+          required: true
+          type: string
+        - name: provinceId
+          in: path
+          description: Id of Province
+          required: true
+          type: string
+        - name: cityId
+          in: path
+          description: Id of City
+          required: true
+          type: string
+        - name: districtId
+          in: path
+          description: Id of District
+          required: true
+          type: string
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/District'
+        '401':
+          description: Unauthorized
+          schema:
+            $ref: '#/definitions/GvpError'
+        '404':
+          description: The specified resource was not found
+          schema:
+            $ref: '#/definitions/GvpError'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/GvpError'
+definitions:
+  Account:
+    description: Account Holder
+    properties:
+      accountLevel:
+        example: 4
+        type: integer
+      accountMissingData:
+        readOnly: true
+        type: boolean
+      accountNumber:
+        example: 49536
+        type: integer
+      accountQualification:
+        $ref: '#/definitions/AccountQualification'
+      address:
+        $ref: '#/definitions/Address'
+      avatarUrl:
+        example: 'https://1.bp.blogspot.com/-Cw9-HvmmSI8/XJuWusCs2rI/AAAAAAAAIlA/GCP58NKq1_QIawuVFLwWaM5vYwFDq0PqgCPcBGAYYCw/s640/maxikiosco%2B22.jpg'
+        type: string
+      businessName:
+        example: Kiosko Oeste S.A.
+        type: string
+      commercialType:
+        $ref: '#/definitions/ComercialType'
+      id:
+        example: 7CD008734CB91C54A100
+        readOnly: true
+        type: string
+      name:
+        example: Kiosko Flash
+        type: string
+      parentAccount:
+        $ref: '#/definitions/Account'
+      status:
+        enum:
+          - Open
+          - Pending
+          - Closed
+          - Suspended
+        type: string
+      tributaryInfo:
+        $ref: '#/definitions/TributaryInfo'
+      type:
+        enum:
+          - PointOfSale
+          - Reseller
+          - Platform
+          - EndUser
+        type: string
+      verifiedAccount:
+        readOnly: true
+        type: boolean
+    type: object
+  AccountQualification:
+    properties:
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      level:
+        description: Account qualification level code
+        example: '1'
+        type: string
+    type: object
+  AccountRegister:
+    properties:
+      avatarImage:
+        description: Image bytes
+        type: string
+      businessName:
+        example: Kiosko Oeste S.A.
+        type: string
+      description:
+        example: Kiosko La Esquina
+        type: string
+      tributaryInfo:
+        $ref: '#/definitions/TributaryInfo'
+    type: object
+  AccountRelationType:
+    enum:
+      - holder
+      - joint
+      - authorized
+    type: string
+  Activity:
+    description: Activity info
+    properties:
+      className:
+        description: Name of object
+        example: TransactionalActivity
+        type: string
+      date:
+        example: '2012-04-23T18:25:43.511Z'
+        format: date-time
+        readOnly: true
+        type: string
+      imageUrl:
+        description: Image for this activity
+        example: gv/logoPersonal.png
+        type: string
+      title:
+        example: Recarga Celular
+        readOnly: true
+        type: string
+    type: object
+  Address:
+    description: Address Object
+    properties:
+      betweenStreet1:
+        type: string
+      betweenStreet2:
+        type: string
+      blockName:
+        type: string
+      city:
+        $ref: '#/definitions/City'
+      country:
+        $ref: '#/definitions/Country'
+      district:
+        $ref: '#/definitions/District'
+      geoLocation:
+        $ref: '#/definitions/GeoLocation'
+      id:
+        example: 7CD008734CB91C54A100
+        readOnly: true
+        type: string
+      lotName:
+        type: string
+      postalCode:
+        example: C4452
+        type: string
+      province:
+        $ref: '#/definitions/Province'
+      streetName:
+        example: Suipacha
+        type: string
+      streetNumber:
+        example: '3244'
+        type: string
+    type: object
+  ApplicationUser:
+    description: User application
+    properties:
+      accountsRelations:
+        items:
+          $ref: '#/definitions/ApplicationUserAccountRelation'
+        readOnly: true
+        type: array
+      address:
+        $ref: '#/definitions/Address'
+      avatarUrl:
+        example: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQruPhEXVOoNPNPamKSV9ylPR31gg8GGfnjffm2-sgtCjnajtXGnA'
+        type: string
+      enable:
+        example: true
+        type: boolean
+      firstLogin:
+        example: false
+        readOnly: true
+        type: boolean
+      firstName:
+        example: Roberto
+        type: string
+      id:
+        example: 7CD008734CB91C54A100
+        readOnly: true
+        type: string
+      identificationNumber:
+        example: '30234443'
+        type: string
+      identificationNumberType:
+        $ref: '#/definitions/IdentificationType'
+      tributaryInfo:
+        $ref: '#/definitions/TributaryInfo'
+      identificationVerified:
+        example: true
+        type: boolean
+      lastName:
+        example: Gomez
+        type: string
+      phone:
+        example: '+541112344455'
+        type: string
+      phoneVerified:
+        example: true
+        type: boolean
+      userEmail:
+        example: rperez@gmail.com
+        type: string
+      userEmailVerified:
+        example: true
+        type: boolean
+      userGroup:
+        $ref: '#/definitions/UserGroup'
+      userId:
+        example: rperez
+        type: string
+      verified:
+        example: true
+        readOnly: true
+        type: boolean
+    type: object
+  ApplicationUserAccountRelation:
+    description: Indicates the type of relationship between an applicationuser and an account
+    properties:
+      accountId:
+        description: Account id
+        example: 7CD008734CB91C54A100
+        readOnly: true
+        type: string
+      relationType:
+        $ref: '#/definitions/AccountRelationType'
+    type: object
+  AtmCard:
+    properties:
+      bankAccount:
+        $ref: '#/definitions/BankAccount'
+      cardNumber:
+        example: Card number
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+    type: object
+  AtmCardData:
+    allOf:
+      - $ref: '#/definitions/BankDepositData'
+      - properties:
+          atmCardId:
+            description: Id of atm card
+            type: string
+        type: object
+  AtmCardDefinition:
+    allOf:
+      - $ref: '#/definitions/BankDefinition'
+      - properties:
+          atmCard:
+            properties: {}
+            type: object
+        type: object
+  AuthToken:
+    properties:
+      accessToken:
+        example: 76A3D72939F1DE921B36C33FBC3FE150
+        type: string
+      lifetime:
+        description: Lifetime seconds
+        example: 1800
+        type: number
+      needChangePassword:
+        description: This token need change User password validation
+        example: false
+        type: boolean
+    type: object
+  BalanceDetail:
+    description: Balance Detail object
+    properties:
+      date:
+        example: '2012-04-23T18:25:43.511Z'
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        example: Acreditaciones de comisiones
+        type: string
+      movementSubType:
+        $ref: '#/definitions/MovementSubType'
+      name:
+        example: Comisiones
+        type: string
+      totalAmount:
+        example: 4254.45
+        type: number
+      transactionType:
+        $ref: '#/definitions/TransactionType'
+    type: object
+  BalanceSummary:
+    description: Balance summary object
+    properties:
+      balanceDetails:
+        items:
+          $ref: '#/definitions/BalanceDetail'
+        type: array
+      beginAmount:
+        description: amount of start date balance summary
+        example: 3452.34
+        type: number
+      beginDate:
+        description: Start date of balance summary
+        example: '2019-05-02'
+        type: string
+      endAmount:
+        description: amount of end date or result of balance summary
+        example: 6756.54
+        type: number
+      endDate:
+        description: 'End date or result, of balance summary'
+        example: '2019-05-02'
+        type: string
+      pendingAmount:
+        description: Total amount of pending balance to accredit
+        example: 100
+        type: number
+      rejectedAmount:
+        description: Total amount of rejected for this balance
+        example: 0
+        type: number
+    type: object
+  Bank:
+    properties:
+      description:
+        example: BBVA S.A.
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      imageUrl:
+        example: 'https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Logotipo_de_BBVA.svg/1280px-Logotipo_de_BBVA.svg.png'
+        type: string
+      name:
+        example: BBVA
+        type: string
+    type: object
+  BankAccount:
+    properties:
+      bank:
+        $ref: '#/definitions/Bank'
+      bankBrach:
+        $ref: '#/definitions/Branch'
+      bankRouting:
+        additionalProperties:
+          $ref: '#/definitions/BankRouting'
+        type: object
+      description:
+        example: Cuenta bancaria Liniers
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      name:
+        example: Cta 318/4343423-344
+        type: string
+    type: object
+  BankAccountType:
+    enum:
+      - saving_account
+      - current_account
+    example: saving_account
+    type: string
+  BankCheckData:
+    allOf:
+      - $ref: '#/definitions/PaymentData'
+      - properties:
+          bankSourceId:
+            description: Bank source of check
+            type: string
+        type: object
+  BankCheckDefinition:
+    allOf:
+      - $ref: '#/definitions/BankDefinition'
+  BankDefinition:
+    allOf:
+      - $ref: '#/definitions/PaymentMethodDefinition'
+      - properties:
+          availableBranches:
+            items:
+              $ref: '#/definitions/Branch'
+            type: array
+          bankAccount:
+            $ref: '#/definitions/BankAccount'
+        type: object
+  BalanceData:
+    allOf:
+      - $ref: '#/definitions/PaymentData'
+      - properties:
+          originSourceId:
+            description: Origigin FinancialAccountId
+            type: string
+            example: 32B42342397
+  BankDepositData:
+    allOf:
+      - $ref: '#/definitions/PaymentData'
+      - properties:
+          bankAccount:
+            $ref: '#/definitions/BankAccount'
+          bankBrach:
+            $ref: '#/definitions/Branch'
+          depositDate:
+            description: Deposit date
+            type: string
+          depositTransactionNumber:
+            description: Deposit transaction number
+            example: 3242342397
+            type: integer
+        type: object
+  BankDepositDefinition:
+    allOf:
+      - $ref: '#/definitions/BankDefinition'
+      - properties:
+          availableBranches:
+            items:
+              $ref: '#/definitions/Branch'
+            type: array
+          bankAccount:
+            $ref: '#/definitions/BankAccount'
+        type: object
+  BankRouting:
+    properties:
+      bankAccountType:
+        $ref: '#/definitions/BankAccountType'
+      cbu:
+        example: CVU
+        type: string
+      currency:
+        $ref: '#/definitions/Currency'
+      holder:
+        example: Robero Gomez
+        readOnly: true
+        type: string
+      label:
+        example: fuego.piedra.agua
+        type: string
+      tributaryIdentificationCode:
+        example: '27302545852'
+        readOnly: true
+        type: string
+    type: object
+  BankTransferData:
+    allOf:
+      - $ref: '#/definitions/BankDepositData'
+      - properties:
+          destinationBankRouting:
+            $ref: '#/definitions/BankRouting'
+        type: object
+  BankTransferDefinition:
+    allOf:
+      - $ref: '#/definitions/BankDefinition'
+  BillCompany:
+    properties:
+      allowBillManualPayment:
+        description: This Company permit a bill manual customer identifier payment
+        example: true
+        type: boolean
+      allowBillRelationPayment:
+        description: This Company permit a bill relation payment
+        example: true
+        type: boolean
+      allowPartialAmount:
+        description: This Company permit modify the total Amount of a Bill
+        example: true
+        type: boolean
+      allowVoluntaryAmount:
+        description: 'This Company permit voluntary payment amount, without any bill relation'
+        example: true
+        type: boolean
+      category:
+        $ref: '#/definitions/BillCompanyCategory'
+      code:
+        description: BillCompaby code
+        example: '170'
+        type: string
+      currencyIsoCode:
+        description: Available currency for this company
+        example: '032'
+        type: string
+      customerIdentifierDescription:
+        description: Label description for manual bill query for this company
+        example: Ingrese numero cliente
+        type: string
+      id:
+        description: BillCompany id
+        example: Edenor
+        type: string
+      name:
+        description: Name of Bill Company
+        example: Edenor
+        type: string
+    type: object
+  BillCompanyCategory:
+    properties:
+      code:
+        description: Code of category
+        example: '17'
+        type: string
+      description:
+        description: Description of category
+        example: Electricidad
+        type: string
+      enable:
+        example: true
+        type: boolean
+      id:
+        description: 19A40F54F62925240D17
+        example: Id of category
+        type: string
+      name:
+        description: Name of category
+        example: Electricidad
+        type: string
+    type: object
+  BillPaymentData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          billBarCode:
+            description: BarCode for this bill
+            example: '8081561681651618615161'
+            type: string
+          billCompany:
+            $ref: '#/definitions/BillCompany'
+          currencyIso:
+            description: Currency for billing payment
+            example: '032'
+            type: string
+          customerIdentifier:
+            description: 'Identifier customer data, for this Business bill'
+            example: '15616184'
+            type: string
+          description:
+            description: Description for this bill
+            example: Cuota mes Julio
+            type: string
+          expirationDate:
+            example: '2012-04-23T18:25:43.511Z'
+            format: date-time
+            type: string
+          externalData:
+            description: External data to transfer
+            type: string
+          totalAmount:
+            description: Total ammount for this bill
+            type: number
+        type: object
+  BillPaymentPublication:
+    allOf:
+      - $ref: '#/definitions/Transaction'
+      - properties:
+          transactionData:
+            $ref: '#/definitions/TransactionData'
+            description: BillPaymentPublication Transaction Data
+        type: object
+    description: Bill Payment Publication
+  Branch:
+    properties:
+      address:
+        $ref: '#/definitions/Address'
+      code:
+        example: '136'
+        type: string
+      description:
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      name:
+        example: 139 - Tartagal
+        type: string
+    type: object
+  Callback:
+    properties:
+      cancel:
+        example: 'https://www.callbackexample.com/callback/cancel'
+        type: string
+      error:
+        example: 'https://www.callbackexample.com/callback/error'
+        type: string
+      redirect:
+        example: 'https://www.example.com/'
+        type: string
+      success:
+        example: 'https://www.callbackexample.com/callback/ok'
+        type: string
+    type: object
+  CardCapturedType:
+    enum:
+      - Manual
+      - Magnetic
+      - IntegratedCircuit
+      - ContactLess
+    type: string
+  CardData:
+    allOf:
+      - $ref: '#/definitions/PaymentData'
+      - properties:
+          cardCapturedType:
+            $ref: '#/definitions/CardCapturedType'
+          expirationMonth:
+            example: 10
+            type: integer
+          expirationYear:
+            example: 2019
+            type: integer
+          firstNumbers:
+            example: '584587451'
+            type: string
+          holderIdentificationNumber:
+            example: '23463764'
+            type: string
+          holderName:
+            example: Roberto Gomez
+            type: string
+          installments:
+            description: Amount of fees
+            example: 6
+            type: integer
+          lastSixNumbers:
+            example: '254156'
+            type: string
+          securityCode:
+            example: '467'
+            type: string
+          track1:
+            description: Encrypted track1
+            type: string
+          track2:
+            description: Encrypted track2
+            type: string
+          track3:
+            description: Encrypted track3
+            type: string
+        type: object
+  CardDefinition:
+    allOf:
+      - $ref: '#/definitions/PaymentMethodDefinition'
+      - properties:
+          expirationMonth:
+            description: Expiration card month number
+            example: '02'
+            readOnly: true
+            type: string
+          expirationYear:
+            description: Expiration card year number
+            example: '22'
+            readOnly: true
+            type: string
+          holderName:
+            description: Card holder name
+            example: Roberto Gomez
+            readOnly: true
+            type: string
+          identificationNumber:
+            description: Card holder identification number
+            example: '22114225'
+            readOnly: true
+            type: string
+          maskedNumber:
+            description: Masked card number
+            example: 454085******1111
+            readOnly: true
+            type: string
+        type: object
+  CardTokenRequest:
+    properties:
+      cardCapturedType:
+        $ref: '#/definitions/CardCapturedType'
+      expirationMonth:
+        example: 10
+        type: integer
+      expirationYear:
+        example: 2019
+        type: integer
+      firstNumbers:
+        example: '584587451'
+        type: string
+      holderIdentificationNumber:
+        example: '23463764'
+        type: string
+      holderName:
+        description: Card holder name
+        example: Roberto Gomez
+        type: string
+      lastSixNumbers:
+        example: '254156'
+        type: string
+      track1:
+        description: Encrypted track1
+        type: string
+      track2:
+        description: Encrypted track2
+        type: string
+      track3:
+        description: Encrypted track3
+        type: string
+    type: object
+  CashDefinition:
+    allOf:
+      - $ref: '#/definitions/PaymentMethodDefinition'
+  BalanceDefinition:
+    allOf:
+      - $ref: '#/definitions/PaymentMethodDefinition'
+  CashInOutPublication:
+    allOf:
+      - $ref: '#/definitions/Transaction'
+      - properties:
+          transactionData:
+            $ref: '#/definitions/TransactionData'
+            description: CashInOutPublication Transaction Data
+        type: object
+    description: CashInOut Publication
+  ChangePassword:
+    properties:
+      actualPassword:
+        description: Actual password
+        type: string
+      newPassword:
+        description: New password
+        type: string
+      newPasswordValidation:
+        description: New password validation
+        type: string
+    type: object
+  City:
+    properties:
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      name:
+        example: La Matanza
+        readOnly: true
+        type: string
+    type: object
+  CodeData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          code:
+            description: Code data
+            example: '8457484658745154'
+            type: string
+        type: object
+  CollectorNetworkData:
+    allOf:
+      - $ref: '#/definitions/PaymentData'
+      - properties:
+          transactionNumber:
+            description: Transaction number in collector network
+            example: 3242342397
+            type: integer
+        type: object
+  CollectorNetworkDefinition:
+    allOf:
+      - $ref: '#/definitions/PaymentMethodDefinition'
+      - properties:
+          availableBranches:
+            items:
+              $ref: '#/definitions/Branch'
+            type: array
+          imageUrl:
+            description: Url for Collector image
+            example: cdn.telerecargas.com.ar/pagoFacilCode
+            type: string
+          paymentReferenceCode:
+            type: string
+        type: object
+  CollectorNetworkOfflineDefinition:
+    allOf:
+      - $ref: '#/definitions/CollectorNetworkDefinition'
+  CollectorNetworkOnlineDefinition:
+    allOf:
+      - $ref: '#/definitions/CollectorNetworkDefinition'
+  ComercialAccountRegister:
+    allOf:
+      - $ref: '#/definitions/Register'
+      - properties:
+          account:
+            $ref: '#/definitions/AccountRegister'
+        type: object
+  ComercialType:
+    properties:
+      code:
+        example: '001'
+        readOnly: true
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      name:
+        example: Polirubro
+        readOnly: true
+        type: string
+    type: object
+  Country:
+    properties:
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      isoCode:
+        example: AR
+        readOnly: true
+        type: string
+      name:
+        example: Argentina
+        readOnly: true
+        type: string
+      description:
+        example: Argentina
+        readOnly: true
+        type: string
+    type: object
+  CreditCardDefinition:
+    allOf:
+      - $ref: '#/definitions/CardDefinition'
+  Currency:
+    properties:
+      code:
+        example: '032'
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        type: string
+      isoCode4217:
+        example: ARS
+        type: string
+      name:
+        example: Peso argentino
+        type: string
+      description:
+        example: Pesos
+        readOnly: true
+        type: string
+      enable:
+        example: true
+        readOnly: true
+        type: boolean
+    type: object
+  Customer:
+    properties:
+      email:
+        description: Email del cliente
+        example: ggonzalez@gmail.com
+        type: string
+      externalId:
+        description: Id unico que identifica al proveedor
+        example: d290f1ee6c544b01900851
+        type: string
+      firstName:
+        description: Nombre del cliente
+        example: Gustavo
+        type: string
+      identificationNumber:
+        description: Numero de documento / cuit del cliente
+        example: '27454125'
+        type: string
+      lastName:
+        description: Apellido del cliente
+        example: Gonzalez
+        type: string
+      providerIdentificationNumber:
+        description: Numero de identificacon del cliente en el proveedor
+        example: '3054454154547845'
+        type: string
+    required:
+      - identificationNumber
+      - providerIdentificationNumber
+    type: object
+  DebitCardDefinition:
+    allOf:
+      - $ref: '#/definitions/CardDefinition'
+  District:
+    properties:
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      name:
+        example: Lomas del Mirador
+        readOnly: true
+        type: string
+    type: object
+  FinancialAccount:
+    description: Financial Account
+    properties:
+      className:
+        description: Object classname
+        example: FinancialAccount
+        type: string
+      availableCredit:
+        description: Available amount for this financial Account.
+        example: 3452.34
+        type: number
+      balanceAmount:
+        description: final amount at end date balance summary
+        example: 3452.34
+        type: number
+      description:
+        example: Cuenta prepaga Virtual
+        type: string
+      id:
+        example: 7CD008734CB91C54A100
+        readOnly: true
+        type: string
+      isDefault:
+        example: true
+        type: boolean
+      enable:
+        example: true
+        type: boolean
+      name:
+        example: Virtual
+        type: string
+      overdraftCredit:
+        description: Overdraft amount
+        example: 3452.34
+        type: number
+      pendingAmount:
+        description: Total amount of pending balance to accredit
+        example: 100
+        type: number
+    type: object
+  FinancialProductAccount:
+    allOf:
+      - $ref: '#/definitions/FinancialAccount'
+      - properties:
+          product:
+            $ref: '#/definitions/Product'
+  FinancialSavingAccount:
+    allOf:
+      - $ref: '#/definitions/FinancialProductAccount'
+      - properties:
+          creationDate:
+            description: Start date of balance summary
+            example: '2019-05-02'
+            type: string
+          closeDate:
+            description: Start date of balance summary
+            example: '2019-05-02'
+            type: string
+  FinancialAvailableAccount:
+    allOf:
+      - $ref: '#/definitions/FinancialProductAccount'
+  FinancialPendingAccount:
+    allOf:
+      - $ref: '#/definitions/FinancialProductAccount'
+  FinancialClosedAccount:
+    allOf:
+      - $ref: '#/definitions/FinancialProductAccount'
+  FinancialConcertationAccount:
+    allOf:
+      - $ref: '#/definitions/FinancialAccount'
+  FinancialMovement:
+    allOf:
+      - $ref: '#/definitions/Transaction'
+      - properties:
+          movementSubType:
+            $ref: '#/definitions/MovementSubType'
+          type:
+            example: Ingreso Liquidacion
+            type: string
+        type: object
+  FinancialMovementList:
+    allOf:
+      - $ref: '#/definitions/PaginationResponse'
+      - properties:
+          transactions:
+            items:
+              $ref: '#/definitions/FinancialMovement'
+            type: array
+        type: object
+  GeoCoordinates:
+    properties:
+      geoHash:
+        description: Geohash with 5 character precision
+        example: 67zth
+        type: string
+      latitude:
+        description: Latitude in decimal format
+        example: -34.603722
+        type: number
+      locationType:
+        enum:
+          - approximate
+          - geometric_center
+          - range_interpolated
+          - rooftop
+          - unknown
+        type: string
+      longitude:
+        description: Longitude in decimal format
+        example: -58.381592
+        type: number
+    type: object
+  GeoLocation:
+    properties:
+      geoCoordinates:
+        $ref: '#/definitions/GeoCoordinates'
+      manualCoordinates:
+        $ref: '#/definitions/GeoCoordinates'
+      updateGeoData:
+        description: Indicates that this object must be updated
+        example: false
+        type: boolean
+    type: object
+  GvpError:
+    properties:
+      code:
+        description: Error code
+        type: string
+      data:
+        $ref: '#/definitions/GvpErrorDescription'
+      message:
+        description: Description of error code
+        type: string
+    required:
+      - code
+      - message
+    type: object
+  GvpErrorDescription:
+    properties:
+      errorCode:
+        type: number
+      errortype:
+        type: string
+      messageText:
+        type: string
+    type: object
+  GvpNotification:
+    properties:
+      action:
+        type: string
+      date:
+        example: '2012-04-23T18:25:43.511Z'
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        description: 'Todas tus recargas de celular, tienen un 20% de descuento inmediato'
+        readOnly: true
+        type: string
+      id:
+        readOnly: true
+        type: string
+      priority:
+        enum:
+          - low
+          - high
+        type: string
+      readed:
+        description: Indicates if the notification has already been read
+        example: false
+        type: boolean
+      title:
+        description: Promotion title
+        example: 20% off en recargas
+        readOnly: true
+        type: string
+    type: object
+  IdentificationType:
+    properties:
+      code:
+        example: A3423
+        type: string
+      descripcion:
+        example: Documento Nacional de Identidad
+        readOnly: true
+        type: string
+      id:
+        example: \3242k3872h3823nf23fnk2
+        readOnly: true
+        type: string
+      maxLenght:
+        example: 12
+        readOnly: true
+        type: integer
+      minLenght:
+        example: 8
+        readOnly: true
+        type: integer
+      nombre:
+        example: DNI
+        readOnly: true
+        type: string
+    required:
+      - codigo
+    type: object
+  Identity:
+    description: User definition on a Identity Provider
+    properties:
+      provider:
+        description: Identity provider name
+        example: Auth0
+        type: string
+      user_id:
+        description: User id on Identity Provider. Sub claim
+        example: c7b91381-a7b6-4af7-9b05-c39d405b856e
+        type: string
+    type: object
+  InstallmentPlan:
+    properties:
+      amount:
+        example: 1000
+        type: number
+      currency:
+        description: ISO-4217 currency code
+        example: ARS
+        type: string
+      installments:
+        items:
+          $ref: '#/definitions/InstallmentPlan_installments'
+        type: array
+    type: object
+  InstallmentPlan_installments:
+    properties:
+      installment_amount:
+        example: 1000
+        type: number
+      installments:
+        example: 1
+        type: integer
+      total_amount:
+        example: 1000
+        type: number
+    type: object
+  LinkButtonData:
+    allOf:
+      - $ref: '#/definitions/PaymentData'
+      - properties:
+          destinationContact:
+            $ref: '#/definitions/PersonalContact'
+        type: object
+  LinkPaymentDefinition:
+    allOf:
+      - $ref: '#/definitions/PaymentMethodDefinition'
+  LoginAuth:
+    properties:
+      userId:
+        type: string
+      userPassword:
+        type: string
+    type: object
+  LoginTerminalAuth:
+    properties:
+      userId:
+        type: string
+      userPassword:
+        type: string
+      terminalId:
+        type: string
+        example: 2k3nkn4ni34nf34m234390g340
+      terminalType:
+        type: string
+        example: SunmiP1
+    type: object
+  LoginSso:
+    properties:
+      providerCode:
+        description: Sso provider code
+        type: string
+      providerName:
+        description: Sso provider name
+        example: Google
+        type: string
+      token:
+        description: Sso auth token
+        example: APA91bEIpum4daJAR2cu3SIEyDvNenr67QsZyVmTpUYv6FENnCgEhXk9I2mak2VRuwV
+        type: string
+    type: object
+  ForgotPassword:
+    properties:
+      userId:
+        type: string
+        example: rgomez
+      email:
+        type: string
+        example: rgomez@gmail.com
+      phone:
+        example: '+541112344455'
+        type: string
+  MovementSubType:
+    enum:
+      - GrossAmount
+      - Fee
+      - Vat
+      - WithheldVat
+    type: string
+  P2pBeneficiaryDiscoveryRequest:
+    properties:
+      applicationUserId:
+        description: ApplictionUser id
+        example: 7CD008734CB91C54A100
+        type: string
+      userId:
+        description: User identificaction (nickname) of applicaation user
+        example: srodriguez
+        type: string
+      email:
+        description: 'Recipient''s email, from an existing applicationUser'
+        example: rgomez@gmail.com
+        type: string
+      idenfiticationNumberTypeCode:
+        description: 'Code of indentification number. If the identificationNumber is sent on request, this attribute must be specified'
+        example: DNI
+        type: string
+      identificationNumber:
+        example: '30234443'
+        type: string
+      phoneNumber:
+        description: E.164 phone number
+        example: '541167857544'
+        type: string
+    type: object
+  P2pBeneficiaryDiscoveryResponse:
+    properties:
+      description:
+        description: Beneficiary
+        example: Roberto Gomez
+        type: string
+      financialAccountId:
+        description: FinancialAccountId which should be used to make the p2p transfer to the beneficiary
+        example: 7CD008734CB91C54A100
+        type: string
+    type: object
+  PaginationResponse:
+    properties:
+      limit:
+        description: Limit filter applied
+        type: integer
+      maxReached:
+        description: has reached max results
+        example: false
+        type: boolean
+      order:
+        enum:
+          - desc
+          - asc
+        type: string
+      size:
+        description: Size of result
+        type: integer
+      start:
+        description: Start number of result
+        type: integer
+    type: object
+  ParkingData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          domain:
+            description: Car domain
+            type: string
+        type: object
+  ParkingFractionTimeData:
+    allOf:
+      - $ref: '#/definitions/ParkingTimeData'
+      - properties:
+          fraction:
+            description: Quantity of minutes fraction
+            maximum: 60
+            minimum: 0
+            type: integer
+        type: object
+  ParkingHourTimeData:
+    allOf:
+      - $ref: '#/definitions/ParkingTimeData'
+  ParkingPenaltyData:
+    allOf:
+      - $ref: '#/definitions/ParkingData'
+      - properties:
+          actCode:
+            description: Act Penalty Code
+            type: string
+        type: object
+  ParkingSubscriptionData:
+    allOf:
+      - $ref: '#/definitions/ParkingData'
+  ParkingTimeData:
+    allOf:
+      - $ref: '#/definitions/ParkingData'
+      - properties:
+          hour:
+            description: Hours quantity
+            maximum: 12
+            minimum: 0
+            type: integer
+        type: object
+  Payment:
+    allOf:
+      - $ref: '#/definitions/Transaction'
+      - properties:
+          currency:
+            $ref: '#/definitions/Currency'
+          paymentMethod:
+            $ref: '#/definitions/PaymentMethodDefinition'
+            description: Attach a PaymentMethod linked to this sale
+          transactionData:
+            $ref: '#/definitions/PaymentData'
+        type: object
+    description: Payment object
+  PaymentData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          fundSourceId:
+            description: Id of FinancialAccount fund source for this payment.
+            type: string
+        type: object
+  PaymentDataClassName:
+    enum:
+      - CashData
+      - CardData
+      - QrCodeData
+      - CollectorNetworkData
+      - BankDepositData
+      - BankCheckData
+      - BankTransferData
+      - VirtualWalletData
+      - LinkButtonData
+      - AtmCardData
+    example: CardData
+    type: string
+  PaymentIntent:
+    allOf:
+      - $ref: '#/definitions/Transaction'
+      - properties:
+          callback:
+            $ref: '#/definitions/Callback'
+          currency:
+            description: currency Iso Code
+            example: '032'
+            type: string
+          customer:
+            $ref: '#/definitions/Customer'
+          expirationDate:
+            description: Fecha de expiracion del pago intencion
+            example: '2012-04-23T18:25:43.511Z'
+            format: date-time
+            readOnly: true
+            type: string
+          items:
+            items:
+              $ref: '#/definitions/PaymentIntentItem'
+            type: array
+          payment:
+            $ref: '#/definitions/Payment'
+          provider:
+            $ref: '#/definitions/Provider'
+          providerTransactionId:
+            description: Numero de autorizacion financiador
+            example: 5845845-weAdnnrgkn9n2u
+            type: string
+          publicUrl:
+            description: URL de acceso al boton de pago
+            example: 'https://payments.medipago.com.ar/intention'
+            readOnly: true
+            type: string
+        type: object
+  PaymentIntentItem:
+    properties:
+      description:
+        description: Descripcion del producto
+        example: Copago
+        type: string
+      product:
+        $ref: '#/definitions/Product'
+      quantity:
+        description: Cantidad
+        example: 500
+        type: number
+    type: object
+  PaymentIntentResponse:
+    properties:
+      hash:
+        description: 'Hash que identifica el pago, debe ser enviado por query a la url'
+        example: 3d423197a30917a624a677bd07a73358ee1151e076848e77a1dae4d316c211142
+        type: string
+      lifetime:
+        description: Segundos de expiracion del boton de pago
+        example: '600'
+        type: string
+      publicUrl:
+        description: URL de acceso al boton de pago
+        example: 'https://payments.medipago.com.ar/intention'
+        type: string
+    type: object
+  PaymentMethodDefinition:
+    properties:
+      availableFundingSources:
+        description: List of available financial funding source for this payment method
+        items:
+          $ref: '#/definitions/FinancialAccount'
+        type: array
+      discount:
+        description: percent of discount
+        example: 10
+        type: number
+      enable:
+        example: true
+        type: boolean
+      id:
+        example: visa_credit_card
+        readOnly: true
+        type: string
+      imageUrl:
+        example: 'http://icons.iconarchive.com/icons/designbolts/credit-card-payment/256/Visa-icon.pngl'
+        type: string
+      installmentsPlan:
+        $ref: '#/definitions/InstallmentPlan'
+      maximiumAmount:
+        description: Maximium amount for this payment method
+        example: 20000
+        type: number
+      minimiumAmount:
+        description: Minimium amount for this payment method
+        example: 1
+        type: number
+      name:
+        description: A short identifier for the supported payment method
+        example: Visa
+        type: string
+      paymentDataClassName:
+        description: Paymentdata className enum
+        example: CardData
+        type: string
+      paymentMethodDefinitionClassName:
+        example: CreditCardDefinition
+        type: string
+      paymentMethodType:
+        $ref: '#/definitions/PaymentMethodType'
+      requireFundingSource:
+        description: This payment method data transaction requiere a funding source specification
+        example: false
+        type: boolean
+    type: object
+  PaymentMethodType:
+    enum:
+      - cash
+      - balance
+      - credit_card
+      - debit_card
+      - qr_code
+      - virtual_wallet
+      - link_button
+      - bank_transfer
+      - bank_check
+      - bank_deposit
+      - collector_network
+      - atm_card
+    example: credit_card
+    type: string
+  PayoutData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          description:
+            type: string
+          productId:
+            description: Id of product payout
+            type: string
+        type: object
+  PersonalContact:
+    description: Personal information contact
+    properties:
+      company:
+        example: Kiosko 365
+        type: string
+      displayName:
+        example: Roberto Gomez
+        type: string
+      emails:
+        items:
+          example: rgomez@gmail.com
+          type: string
+        type: array
+      jobTitle:
+        type: string
+      phones:
+        items:
+          $ref: '#/definitions/PhoneData'
+        type: array
+    type: object
+  PersonalData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          identification:
+            description: Person identification id
+            type: string
+          identificationType:
+            enum:
+              - root
+              - passport
+            type: string
+        type: object
+  Phone:
+    properties:
+      phoneNumber:
+        description: E.164 phone number
+        example: '541167857544'
+        type: string
+      validatedPhone:
+        example: true
+        type: boolean
+    type: object
+  PhoneData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          countryCode:
+            description: CountryCode Nnumber
+            example: '54'
+            type: string
+          msisdn:
+            description: Phone number
+            example: '1154875415'
+            type: string
+          phoneNumber:
+            description: Phone number with regional country code
+            example: '1125451245'
+            type: string
+        type: object
+  PhoneValidationRequest:
+    properties:
+      phone:
+        example: '+541112344455'
+        type: string
+      validationCode:
+        example: '2851'
+        type: string
+      validationType:
+        $ref: '#/definitions/PhoneValidationType'
+    type: object
+  PhoneValidationType:
+    enum:
+      - sms
+      - whatsapp
+    type: string
+  Product:
+    description: Product
+    properties:
+      code:
+        description: Product code
+        example: '256'
+        type: string
+      description:
+        example: IMPORTANTE - Para ingresar la operacion se debe utilizar el codigo de  18  digitos de la tarjeta. Los montos de recarga permitidos son desde $150 hasta $2000
+        type: string
+      enable:
+        example: true
+        type: boolean
+      fractionalAmount:
+        description: Amount for fractional block of quantity product
+        example: 10
+        type: number
+      id:
+        example: 7CD008734CB91C54A100
+        readOnly: true
+        type: string
+      imageUrl:
+        description: Image of product
+        example: 'https://cdn.telerecargas.com.ar/gvp/gv/externalFiles/dtv-logo.jpg'
+        type: string
+      initialValues:
+        description: Initialization value
+        example: '10'
+        type: string
+      maxDigits:
+        description: Max digits of transaction data
+        example: '0,10,10'
+        type: string
+      maximium:
+        description: Maximium quantity available in a transaction
+        example: 2000
+        type: number
+      minimium:
+        description: Minimium quantity available in a transaction
+        example: 150
+        type: number
+      name:
+        description: 'The product’s name, meant to be displayable to the customer. Applicable to both service and good types'
+        example: DirecTV
+        type: string
+      productGroup:
+        $ref: '#/definitions/ProductGroup'
+      productType:
+        $ref: '#/definitions/ProductType'
+      salePrice:
+        description: Product sale price
+        example: 270
+        type: number
+      skuCode:
+        description: Product BarCode
+        example: '5701234567899'
+        type: string
+      smallDescription:
+        example: Recarga DirecTv
+        type: string
+      transactionDataClassName:
+        description: Object class name of TransactionData
+        enum:
+          - PhoneData
+          - CodeData
+          - BillPaymentData
+          - ParkingData
+          - PersonalData
+          - WithoutData
+          - PayoutData
+        example: CodeData
+        type: string
+      transactionDataLabel:
+        example: Ingrese numero medidor
+        type: string
+      vendor:
+        $ref: '#/definitions/Vendor'
+    type: object
+  ProductGroup:
+    properties:
+      code:
+        example: Recharge
+        type: string
+      description:
+        example: Productos de Recarga Virtuales
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      imageUrl:
+        example: 'https://cajavecina.gisgeoresearch.com/assets/images/icons/recargar_celular.png'
+        type: string
+      name:
+        example: Recargas
+        type: string
+      parentCategoryId:
+        example: Recargas
+        type: string
+    type: object
+  ProductType:
+    enum:
+      - Recharge
+      - BillPayment
+      - PinCode
+      - Virtual
+      - Physical
+      - Transport
+      - Service
+      - Currency
+      - Generic
+    type: string
+  Promotion:
+    properties:
+      description:
+        description: 'Todas tus recargas de celular, tienen un 20% de descuento inmediato'
+        readOnly: true
+        type: string
+      id:
+        readOnly: true
+        type: string
+      imageUrl:
+        description: Image for this promotion
+        example: 'https://cdn.ynercia.com.ar/promos/PersonalWSP1.jpg'
+        readOnly: true
+        type: string
+      linkUrl:
+        description: Promotion external link
+        type: string
+      title:
+        description: Promotion title
+        example: 20% off en recargas
+        readOnly: true
+        type: string
+    type: object
+  Provider:
+    properties:
+      businessName:
+        description: Razon social del proveedor
+        example: AccordSalud
+        type: string
+      externalId:
+        description: Id unico que identifica al proveedor
+        example: d290f1ee6c544b01900851
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+    required:
+      - businessName
+      - externalId
+    type: object
+  Province:
+    properties:
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      name:
+        example: Buenos Aires
+        readOnly: true
+        type: string
+    type: object
+  Purchase:
+    allOf:
+      - $ref: '#/definitions/Transaction'
+      - properties:
+          payment:
+            $ref: '#/definitions/Payment'
+            description: Attach a PaymentObject linked to this purchase
+        type: object
+    description: Purchase object
+  QrCodeData:
+    allOf:
+      - $ref: '#/definitions/PaymentData'
+  QrCodeDefinition:
+    allOf:
+      - $ref: '#/definitions/PaymentMethodDefinition'
+      - properties:
+          qrImageUrl:
+            description: Url for QR code image
+            example: cdn.telerecargas.com.ar/qrCodeGeneratorToken
+            type: string
+        type: object
+  Register:
+    properties:
+      user:
+        $ref: '#/definitions/UserRegister'
+    required:
+      - user
+    type: object
+  Sale:
+    allOf:
+      - $ref: '#/definitions/Transaction'
+      - properties:
+          payment:
+            $ref: '#/definitions/Payment'
+            description: Attach a PaymentObject linked to this sale
+          product:
+            $ref: '#/definitions/Product'
+            description: Sale product
+          transactionType:
+            $ref: '#/definitions/TransactionType'
+            example: Sale
+          transactionData:
+            $ref: '#/definitions/TransactionData'
+        type: object
+    description: Sale Object
+  TotalSale:
+    properties:
+      amount:
+        example: 4345.32
+        format: double
+        type: number
+      applicationUser:
+        $ref: '#/definitions/ApplicationUser'
+      date:
+        example: '2012-04-23T18:25:43.511Z'
+        format: date-time
+        readOnly: true
+        type: string
+      product:
+        $ref: '#/definitions/Product'
+      productReference:
+        $ref: '#/definitions/Product'
+      state:
+        enum:
+          - approved
+          - pending
+          - rejected
+        readOnly: true
+        type: string
+    type: object
+  Transaction:
+    description: Transaction object
+    properties:
+      amount:
+        example: 600
+        format: double
+        type: number
+      clientTransactionId:
+        description: 'The api consummer can use this field, to identify this transaction'
+        example: '3248236486'
+        maxLength: 22
+        type: string
+      comments:
+        type: string
+      confirmationDate:
+        example: '2012-04-23T18:25:43.511Z'
+        format: date-time
+        readOnly: true
+        type: string
+      confirmationId:
+        description: Confirmation id
+        example: '3488827527'
+        readOnly: true
+        type: string
+      created:
+        example: '2012-04-23T18:25:43.511Z'
+        format: date-time
+        readOnly: true
+        type: string
+      description:
+        readOnly: true
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      number:
+        description: Transaction number
+        example: 3488827527
+        format: int
+        readOnly: true
+        type: number
+      state:
+        $ref: '#/definitions/TransactionState'
+        readOnly: true
+      stateDetail:
+        $ref: '#/definitions/TransactionStateDetail'
+        readOnly: true
+      transactionType:
+        $ref: '#/definitions/TransactionType'
+    required:
+      - amount
+      - clientTransactionId
+    type: object
+  TransactionData:
+    properties:
+      className:
+        description: Name of object
+        example: CodeRecharge
+        type: string
+    required:
+      - className
+    type: object
+  TransactionReceipt:
+    description: Receipt for a transaction
+    properties:
+      receiptString:
+        type: string
+    type: object
+  TransactionState:
+    enum:
+      - approved
+      - pending
+      - rejected
+    type: string
+  TransactionStateDetail:
+    properties:
+      message:
+        description: Transaction detail message description
+        type: string
+      transactionType:
+        $ref: '#/definitions/TransactionType'
+        description: Message related origin transaction
+    type: object
+  TransactionType:
+    enum:
+      - Payment
+      - Sale
+      - Debit
+      - Credit
+      - Transfer
+      - PurcharseInvoice
+      - SaleInvoice
+      - PaymentIntent
+      - P2pOutputTransfer
+      - P2pInputTransfer
+      - BankOutputTransfer
+      - BankInputTransfer
+      - InternalProductTransfer
+      - CardAuthorization
+      - CardAtmAuthorization
+      - CardReturn
+      - CardAdjustment
+    type: string
+  TransactionalActivity:
+    allOf:
+      - $ref: '#/definitions/Activity'
+      - properties:
+          amount:
+            example: 600
+            format: double
+            readOnly: true
+            type: number
+          description:
+            description: Aditional description of transactional activity
+            readOnly: true
+            type: string
+          productType:
+            $ref: '#/definitions/ProductType'
+          state:
+            $ref: '#/definitions/TransactionState'
+          transactionId:
+            example: 2D06478D397F297806E6
+            readOnly: true
+            type: string
+          transactionType:
+            $ref: '#/definitions/TransactionType'
+        type: object
+  Transfer:
+    allOf:
+      - $ref: '#/definitions/Transaction'
+      - properties:
+          transactionData:
+            $ref: '#/definitions/TransactionData'
+            description: Product Transaction Data
+        type: object
+    description: Sale Object
+  TransferInnerData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          destination:
+            description: Financial account destination ID of transfer
+            type: string
+          destinationDescription:
+            description: Description of financialAccount destination
+            type: string
+          origin:
+            description: Financial account origin ID of transfer
+            type: string
+          originDescription:
+            description: Description of financialAccount origin
+            type: string
+        type: object
+  TransferOuterData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          destination:
+            $ref: '#/definitions/BankRouting'
+            description: Financial account destination of transfer
+          origin:
+            $ref: '#/definitions/BankRouting'
+            description: Financial account origin of transfer
+        type: object
+  TransportData:
+    allOf:
+      - $ref: '#/definitions/TransactionData'
+      - properties:
+          cardId:
+            description: Card Id
+            example: '8457484658745154'
+            type: string
+        type: object
+  TributaryCondition:
+    properties:
+      code:
+        example: 3B26087384811DD52425
+        type: string
+      description:
+        example: Monotributista
+        readOnly: true
+        type: string
+    type: object
+  TributaryIdentificationType:
+    properties:
+      code:
+        example: 3B26087384811DD52425
+        type: string
+      description:
+        example: CUIT
+        readOnly: true
+        type: string
+    type: object
+  TributaryInfo:
+    properties:
+      tributaryCondition:
+        $ref: '#/definitions/TributaryCondition'
+      tributaryIdentificationCode:
+        example: '27302545852'
+        type: string
+      tributaryIdentificationType:
+        $ref: '#/definitions/TributaryIdentificationType'
+    type: object
+  UserGroup:
+    description: User role group
+    properties:
+      description:
+        example: Permisos de empleado
+        type: string
+      id:
+        example: 7CD008734CB91C54A100
+        readOnly: true
+        type: string
+      name:
+        example: Empleado
+        type: string
+      principal:
+        example: true
+        type: boolean
+    type: object
+  UserRegister:
+    properties:
+      address:
+        $ref: '#/definitions/Address'
+        description: User address
+      avatarImageUrl:
+        description: Image source url
+        type: string
+      email:
+        description: 'User email. This email will be validated as unique in the entire platform '
+        example: robertogomez@gmail.com
+        type: string
+      emailVerified:
+        description: Indicates if the email is already validated
+        example: true
+        type: boolean
+      externalIdentity:
+        $ref: '#/definitions/Identity'
+        description: External IDP user definition
+      firstName:
+        description: User firstname
+        example: Roberto
+        type: string
+      identificationNumber:
+        example: '30894444'
+        type: string
+      identificationNumberType:
+        $ref: '#/definitions/IdentificationType'
+      identificationVerified:
+        description: Indicates that the identification data was verified
+        example: true
+        type: boolean
+      lastName:
+        description: Lastname firstname
+        example: Gomez
+        type: string
+      phone:
+        description: E.164 user phone. This phone will be validated as unique in the entire platform
+        example: '+541112344455'
+        type: string
+      phoneVerified:
+        description: Indicates if the phone is already validated
+        example: true
+        type: boolean
+      tributaryInfo:
+        $ref: '#/definitions/TributaryInfo'
+      userGroupId:
+        description: You can indicate the role you want the user to have to register
+        type: string
+      username:
+        description: Login username
+        example: rgomez
+        type: string
+    required:
+      - email
+      - firstName
+      - identificationNumber
+      - lastName
+      - phone
+      - phoneVerified
+    type: object
+  Vendor:
+    properties:
+      code:
+        example: '000418'
+        type: string
+      description:
+        example: DirecTv S.A.
+        type: string
+      id:
+        example: 3B26087384811DD52425
+        readOnly: true
+        type: string
+      imageUrl:
+        description: Vendor logo image url
+        example: gv/externalFiles/dtv-logo.jpg
+        type: string
+      name:
+        description: Name of Vendor
+        example: DirectTv
+        type: string
+    type: object
+  VirtualWalletData:
+    allOf:
+      - $ref: '#/definitions/PaymentData'
+      - properties:
+          customerAuthorizationCode:
+            example: '89749357934'
+            type: string
+          customerIdentifier:
+            example: '434234534'
+            type: string
+        type: object
+  VirtualWalletDefinition:
+    allOf:
+      - $ref: '#/definitions/PaymentMethodDefinition'
+    properties:
+      customerAuthorizationLabel:
+        example: Ingrese el token de la billetera
+        type: string
+      customerIdentifierLabel:
+        example: Ingrese numero Documento
+        type: string
+    type: object
+  inline_response_200:
+    properties:
+      type:
+        example: credit_card
+        type: string
+      values:
+        items:
+          $ref: '#/definitions/PaymentMethodDefinition'
+        type: array
+    type: object
+  inline_response_200_1:
+    properties:
+      PaginationResponse:
+        $ref: '#/definitions/PaginationResponse'
+    type: object
