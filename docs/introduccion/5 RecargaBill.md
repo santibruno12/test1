@@ -10,7 +10,18 @@
 Este metodo sirve para obtener todas las empresas habilitadas para operar. Estas poseen una estructura la cual veremos a continuacion.
 
 ### Estructura de una compañia
-Como datos importantes podemos encontrar
+Como datos importantes podemos encontrar:
+
+Column A | Column B | 
+---------|----------|
+ name | Nombre de la empresa |
+ code | Codigo de la empresa |
+ enable | Habilitado o desabilitado | 
+ A3 | B3 | 
+ A3 | B3 | 
+ A3 | B3 | 
+ A3 | B3 | 
+ A3 | B3 | 
 
 ```json
 {
@@ -46,3 +57,33 @@ Como datos importantes podemos encontrar
     ]
 },
 ```
+
+## Obtener facturas a pagar
+En nuestra api tenemos 2 formas de obtener las facturas, las cuales explicaremos a continuacion. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
