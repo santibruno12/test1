@@ -7,7 +7,7 @@
 #
 ##  Obtener las empresas disponibles
 
-Este metodo sirve para obtener todas las empresas habilitadas para operar. Estas poseen una estructura la cual veremos a continuacion.
+El metodo "/sales/billPayment/availablesCompanies" sirve para obtener todas las empresas habilitadas para operar. Estas poseen una estructura la cual veremos a continuacion.
 
 ### Estructura de una compañia
 Como datos importantes podemos encontrar:
@@ -58,23 +58,131 @@ Column A | Column B |
 },
 ```
 
-## Obtener facturas a pagar
-En nuestra api tenemos 2 formas de obtener las facturas, las cuales explicaremos a continuacion. 
+
+## Obtener Factura por codigo de barras
+
+La obtencion de este es muy sencilla. Utilizar un POST en el metodo /sales/billPayment/availablesBill/findByBarCode. El body requerido en el request pide el dato "billBarCode" con un codigo de barras como en el siguiente ejemplo.
+
+```json
+{
+    "billBarCode": "579201910127747008036409003400000101000004270050"    
+}
+```
+Para este metodo hay 3 casos posibles de reponse.
+
+
+### 1- Encuentra la factura correctamente 
+El primero caso es cuando la factura es encontrada y muestra su estructura de factura correctamente
+
+```json
+[
+    {
+        "className": "BillPaymentData",
+        "externalData": "93A1028111DA0012497073477643454461746F7353616C69646181DC0013A7696D706F727465AB636F6469676F4261727261AB6465736372697063696F6EAB6861736846616374757261A8646574616C6C6573AF746974756C6F73446574616B5671386433646B44576F92A104A8636C69656E74496492A104AA3030383631303832373992A104AA6D6178416D6F756E7431CB40A578000000000092A104AB636F6D70616E794E616D6592A104A944495245435420545692A104A47479706592A104A7626172636F646592A104AA6D696E416D6F756E7431CB40A578000000000092A104AA616D6F756E745479706592A104A345534392A104A765787069726564C292A104AE65787069726174696F6E44617465C092A104AD7061796D656E744D6F6465496492A104DA0014303831323033303933367247725A4C424644447692A104A7626172636F646592A104DA002C303537303038363130383237393030303338333231353238383231303230363030303030323734383030303592A104A7616D6F756E7431CB40A578000000000092A104AE6164646974696F6E616C44617461C092A104A97265666572656E6365C0C0C293A102E993DA00100000000000000000000000000274800C060293A102E993DA00100000000000000000000000000274800C0602C0C0C0C0",
+        "billCompany": {
+            "id": "16CB1F6815771858E95F",
+            "description": "DIRECT TV",
+            "name": "DIRECT TV",
+            "code": "57",
+            "enable": true,
+            "externalName": "DIRECT TV",
+            "allowVoluntaryAmount": false,
+            "allowBillManualPayment": true,
+            "allowBillRelationPayment": true,
+            "allowPartialAmount": false,
+            "customerIdentifierDescription": "Nro. de Cliente",
+            "billModes": [
+                {
+                    "billMode": {
+                        "id": "61953167179400013610",
+                        "name": "COBRANZA SIN FACTURA 10 D"
+                    },
+                    "parameters": [
+                        {
+                            "id": "CBF",
+                            "name": "Nro. de Cliente",
+                            "inputType": "T",
+                            "order": 0,
+                            "length": 10,
+                            "readOnly": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "billMode": {
+                        "id": "46505976008500000337",
+                        "name": "COBRANZA SIN FACTURA (ONLINE)"
+                    },
+                    "parameters": [
+                        {
+                            "id": "CBF",
+                            "name": "Nro. de Cliente",
+                            "inputType": "T",
+                            "order": 0,
+                            "length": 8,
+                            "readOnly": false,
+                            "optional": false
+                        }
+                    ]
+                },
+                {
+                    "billMode": {
+                        "id": "0812030936xfRlxsGlAx",
+                        "name": "COBRANZA SIN FACTURA"
+                    },
+                    "parameters": [
+                        {
+                            "id": "CBF",
+                            "name": "Nro. de Cliente",
+                            "inputType": "T",
+                            "order": 0,
+                            "length": 8,
+                            "readOnly": false,
+                            "optional": false
+                        }
+                    ]
+                }
+            ]
+        },
+        "currencyIso": "ARS",
+        "customerIdentifier": "0086108279",
+        "billBarCode": "05700861082790003832152882102060000027480005",
+        "description": "Cliente: 0086108279\n",
+        "totalAmount": 2748.00,
+        "openAmount": false,
+        "requireAditionalData": false,
+        "aditionalData": [],
+        "minAmount": 2748.00,
+        "maxAmount": 2748.00
+    }
+]
+```
 
 
 
 
 
+### 2- Encuentra la factura pero con error en la estructura 
+El primero caso es cuando la factura es encontrada y muestra su estructura de factura correctamente
 
 
 
+### 3- Los datos no alcanzan para determinar la factura
+En este caso el codigo de barras ingresado trae facturas de varias empresas y no alcanza para determinar cual es la correcta a pagar, si se da este suceso deberiamos especificar de la siguiente manera.
 
 
+```json
+{
+    "billBarCode": "579201910127747008036409003400000101000004270050",
+    "billCompany": {
+            "code": "3145"
+        }
+}
+```
 
 
-
-
-
+Dicho code, lo obtendriamos del metodo "/sales/billPayment/availablesCompanies" en el dato "code" de la compañia que vamos a utilizar
 
 
 
