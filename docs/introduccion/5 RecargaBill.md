@@ -188,6 +188,10 @@ Dicho code, lo obtendriamos del metodo "/sales/billPayment/availablesCompanies" 
 
 
 
+## Obtener Factura por codigo de factura
+
+
+
 
 
 
