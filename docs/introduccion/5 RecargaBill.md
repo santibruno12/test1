@@ -192,11 +192,14 @@ Dicho code, lo obtendriamos del metodo "/sales/billPayment/availablesCompanies" 
 ## Obtener por datos de Factura
 
 
-La segunda forma de obtener una factura es a traves de datos ingresados sobre la factura y la compañia a utilizar.
-
+La segunda forma de obtener una factura es a traves de datos ingresados sobre la factura y la compañia a utilizar. 
 Este metodo exige escribir varios datos dentro del body para poder ejecutar el metodo correctamente.
 
-En primera instancia un objeto "billCompany" el cual contiene un codigo de la empresa a utilizar. Luego un "billMode" el cual determina el tipo de factura que se desea obtener, este contiene un "id" con el codigo del tipo de factura y un "name" que contiene el nombre del tipo de factura. Por ultimo el parametro el cual define el valor a cobrar y su ID.
+• En primera instancia un objeto "billCompany" el cual contiene un codigo de la empresa a utilizar. 
+
+• Luego un "billMode" el cual determina el tipo de factura que se desea obtener, este contiene un "id" con el codigo del tipo de factura y un "name" que contiene el nombre del tipo de factura. 
+
+• Por ultimo el parametro el cual define el valor a cobrar y su ID.
 
 
 
