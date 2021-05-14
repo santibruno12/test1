@@ -163,8 +163,9 @@ El primero caso es cuando la factura es encontrada y muestra su estructura de fa
 
 
 
-### 2- Encuentra la factura pero con error en la estructura 
-El primero caso es cuando la factura es encontrada y muestra su estructura de factura correctamente
+### 2- No encuentra factura
+
+Este caso ocurre cuando el metodo no encuentra una factura devolviendo una respuesta vacia
 
 
 
@@ -188,10 +189,33 @@ Dicho code, lo obtendriamos del metodo "/sales/billPayment/availablesCompanies" 
 
 
 
-## Obtener Factura por codigo de factura
+## Obtener por datos de Factura
+
+
+La segunda forma de obtener una factura es a traves de datos ingresados sobre la factura y la compañia a utilizar.
+
+Este metodo exige escribir varios datos dentro del body para poder ejecutar el metodo correctamente.
 
 
 
+
+```json
+{
+	"billCompany": {
+		"code": "482"
+	},
+	"billMode": {
+		"id": "39030785707000000527",
+		"name": "COBRANZA SIN FACTURA - CUIT / DNI"
+	},
+	"parameters": [
+		{
+			"id": "C11",
+			"value": "27249286090"
+		}
+	]
+}
+```
 
 
 
