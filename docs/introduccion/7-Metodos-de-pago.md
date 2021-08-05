@@ -1,14 +1,14 @@
-# Metodos de pago
+# Medios de pago
 ---
-En el presente documento se especifica la API para ser utilizada para los metodos de pago externos.
+En el presente documento se especifica la API para ser utilizada para los medios de pago externos.
 
 Las operaciones que pueden realizarse incluyen:
-- Obtener Metodos de pagos disponibles
-- Abonar con el metodo de pago elegido
+- Obtener medios de pagos disponibles
+- Abonar con el medio de pago elegido
 - Respuestas posibles
-## Obtener metodos de pagos disponibles
+## Obtener medios de pagos disponibles
 El primer método a utilizar es un **POST** con el método **/payment-methods-transaction**.
-Este método devolverá los métodos de pagos externos para las transacciones a realizar, para esto se le deberá enviar en el Body un monto (amount) con un valor entero y el tipo de transacción con el parámetro sale como veremos a continuación 
+Este método devolverá los medios de pagos para las transacciones a realizar, para esto se le deberá enviar en el Body un monto (amount) con un valor entero y el tipo de transacción con el parámetro sale como veremos a continuación 
 
 ```json
 {
@@ -16,7 +16,7 @@ Este método devolverá los métodos de pagos externos para las transacciones a 
     "transactionType": "Sale"
 }
 ```
-Este request devolvería un response con los métodos habilitados, Lo que deberemos hacer es guardar el “id” del método de pago a utilizar ya que en el próximo paso lo deberemos enviar dentro del body en un objeto llamado “paymentMethod”.
+Este request devuelve los medios de pago habilitados, Lo que deberemos hacer es guardar el “id” del medio de pago a utilizar ya que en el próximo paso lo deberemos enviar dentro del body en un objeto llamado “paymentMethod”.
 
 #### Ejemplo Response
 
@@ -69,16 +69,16 @@ Este request devolvería un response con los métodos habilitados, Lo que debere
     }
 ]
 ```
-## Abonar con metodo externo 
+## Abonar con medio de pago seleccionado 
 
 Para ejecutar el pago de la transacción deberemos utilizar un POST con el método 
 **/payments**. Para este método deberemos recurrir a una función con un protocolo encriptación (que se les enviara junto con los datos para operar) para encriptar los datos de la tarjeta, Los datos a encriptar son: firstNumbers, lastSixNumbers, securityCode, expirationYear, expirationMonth. 
 
 En el request del método podemos ver los siguientes parámetros
 
-Dato | nombre | Descripcion |
+Dato | nombre | Descripción |
 ---------|----------|----------|
- transactionType | Tipo de transaccion  |Determina el tipo de transaccion a realizar
+ transactionType | Tipo de transacción  |Determina el tipo de transaccion a realizar
  amount |monto |Importe entero o decimal que se asignará al abonado.
  comments | Comentario  |Comentario 
  clientTransactionId | ID único de transacción  |Este es el ID de la transacción (debe ser único) 
@@ -88,26 +88,26 @@ Dato | nombre | Descripcion |
 
 Dentro del objeto payment podemos observar varios parámetros que definen el tipo de pago con sus respectivos datos requeridos.
 
-Dato | nombre | Descripcion |
+Dato | nombre | Descripción |
 ---------|----------|----------|
-transactionType | Tipo de transaccion  |Determina el tipo de transaccion a realizar 
+transactionType | Tipo de transacción  |Determina el tipo de transacción a realizar 
 clientTransactionId | ID único de transacción    |Este es el ID de la transacción (debe ser único y puede ser igual que el anterior)
-currency | Tipo de moneda  |Codigo del tipo de moneda en la que se expresa la factura en modo ISO
-paymentMethod | Tipo del método de pago  |Objeto que envía el ID que determina que método de pago se utiliza
+currency | Tipo de moneda  |Código del tipo de moneda en la que se expresa la factura en modo ISO
+paymentMethod | Tipo del medio de pago  |Objeto que envía el ID que determina que medio de pago se utiliza
 transactionData | Dato transaccional  |Este objeto posee los datos requeridos del método de pago a utilizar.
 
 ### Datos requeridos para abonar
 
 
-Dato |  Descripcion |
+Dato |  Descripción |
 ---------|----------|
 firstNumbers | Primeros 10 números de la tarjeta 
-lastSixNumbers | Ultimos 6 numeros de la tarjeta 
-securityCode | Codigo de seguridad 
+lastSixNumbers | Ultimos 6 números de la tarjeta 
+securityCode | Código de seguridad 
 holderName | Nombre que figura en la tarjeta 
 expirationYear | Año de expiración 
 expirationMonth | Mes de expiración  
-holderIdentificationNumber | Numero de documento 
+holderIdentificationNumber | Número de documento 
 installments | Cuotas 
 cardCapturedType | Tipo de captura de tarjeta 
 
@@ -151,7 +151,7 @@ A continuacion un ejemplo de como se deberia enviar el request
 
 ### Respuestas Posibles
 
-El Request anterior puede obtener dos respuestas finales, Una aprobada y una rechazada como se mostrara en los ejemplos a continuación
+El Request anterior puede obtener dos respuestas finales, aprobada o rechazada
 
 #### Ejemplo Aprobado
 
